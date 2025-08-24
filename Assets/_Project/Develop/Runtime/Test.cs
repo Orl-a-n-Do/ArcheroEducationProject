@@ -1,24 +1,50 @@
+using Assets._Project.Develop.Runtime.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
+using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
+using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    
-    private ResourcesAssetsLoader _resourcesAssetsLoader;
-    private ICoroutinesPerformer _coroutinesPerformer;
+
+    private DIContainer _container;
 
     private void Awake()
     {
-        _resourcesAssetsLoader = CreateResourcesAssetsLoader();
+        _container = new();
 
-        _coroutinesPerformer = CreateCoroutinesPerformer();
+        _container.RegisterAsSingle<ICoroutinesPerformer>(CreateCoroutinesPerformer);
+
+        _container.RegisterAsSingle(CreateConfigsProviderService);
+
+        _container.RegisterAsSingle(CreateResourcesAssetsLoader);
+
+
+        ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+
+        coroutinesPerformer.StartPerform(LoadConfigs());    
+
     }
 
-    private ResourcesAssetsLoader CreateResourcesAssetsLoader() => new ResourcesAssetsLoader();
-
-    private CoroutinesPerformer CreateCoroutinesPerformer()
+    private ConfigsProviderService CreateConfigsProviderService(DIContainer c)
     {
+        ResourcesAssetsLoader resourcesAssetsLoader = c.Resolve<ResourcesAssetsLoader>();
+
+        ResourcesConfigLoader resourcesConfigLoader = new ResourcesConfigLoader(resourcesAssetsLoader);
+
+        return new ConfigsProviderService(resourcesConfigLoader);   
+
+    }
+
+
+
+    private ResourcesAssetsLoader CreateResourcesAssetsLoader(DIContainer c) => new ResourcesAssetsLoader();
+
+    private CoroutinesPerformer CreateCoroutinesPerformer(DIContainer c)
+    {
+        ResourcesAssetsLoader _resourcesAssetsLoader = c.Resolve<ResourcesAssetsLoader>();
+
         CoroutinesPerformer coroutinesPerformerPrefab = _resourcesAssetsLoader
             .Load<CoroutinesPerformer>("Utilities/CoroutinesPerformer");
 
@@ -29,14 +55,23 @@ public class Test : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            _coroutinesPerformer.StartPerform(TestCoroutine());
+        {
+
+            ConfigsProviderService configsProviderService = _container.Resolve<ConfigsProviderService>();
+
+            TestConfig config = configsProviderService.GetConfig<TestConfig>();
+            Debug.Log(config.Damage);
+        }
+
     }
 
-   private IEnumerator TestCoroutine()
+   private IEnumerator LoadConfigs()
     {
-        Debug.Log("Start");
-        yield return new WaitForSeconds(1f);
-        Debug.Log("End");
+        ConfigsProviderService configsProviderService = _container.Resolve<ConfigsProviderService>();
+
+        Debug.Log("StartLoadConfigs");
+        yield return configsProviderService.LoadAsync();
+        Debug.Log("EndLoadConfigs");
     }
 
 }
