@@ -3,7 +3,10 @@ using UnityEngine;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using System.Collections;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
-using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement; // Import the DI container namespace for dependency injection, импортируем пространство имен контейнера внедрения зависимостей
+using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
+using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.LoadingScreen;
+using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement; // Import the DI container namespace for dependency injection, импортируем пространство имен контейнера внедрения зависимостей
 
 
 namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
@@ -36,7 +39,11 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
          private IEnumerator Initialize(DIContainer container)
          {
 
-            Debug.Log("Открываеться штора загрузки");
+            ILoadingScreen loadingScreen = container.Resolve<ILoadingScreen>();
+            SceneSwitcherService sceneSwitcherService = container.Resolve<SceneSwitcherService>();
+            
+            loadingScreen.Show();
+           
 
             Debug.Log("Начинаеться инициализация сервисов");
 
@@ -46,9 +53,9 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             Debug.Log("Завершение инициализации сервисов");
 
-            Debug.Log("Закрытие шторы загрузки");
+            loadingScreen.Hide();
 
-            Debug.Log("Начинаеться перехрод на другую сцену");
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
 
         }
     
