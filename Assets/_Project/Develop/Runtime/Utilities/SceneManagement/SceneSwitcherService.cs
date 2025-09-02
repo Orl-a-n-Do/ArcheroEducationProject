@@ -28,13 +28,13 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagement
         }
 
 
-        public IEnumerator ProcessSwitchTo(string sceneName)
+        public IEnumerator ProcessSwitchTo(string sceneName, IInputSceneArgs sceneArgs = null)
         {
              Debug.Log($"SceneLoader: {_sceneLoaderService != null}, LoadingScreen: {_loadingScreen != null}");
             _loadingScreen.Show();
 
             yield return _sceneLoaderService.LoadAsync(Scenes.Empty);
-            yield return _sceneLoaderService.UnloadAsync(sceneName);
+            yield return _sceneLoaderService.LoadAsync(sceneName);
 
 
             SceneBootstrap sceneBootstrap = Object.FindObjectOfType<SceneBootstrap>();
@@ -42,7 +42,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagement
             if (sceneBootstrap == null)
                 throw new NullReferenceException(nameof(sceneBootstrap) + " not found");
 
-            yield return sceneBootstrap.Initialize(_container);
+            yield return sceneBootstrap.Initialize(_container, sceneArgs);
 
             _loadingScreen.Hide();
 

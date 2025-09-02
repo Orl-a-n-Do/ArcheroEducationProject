@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
@@ -15,9 +16,16 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
 
 
-        public override IEnumerator Initialize(DIContainer container)
+        public override IEnumerator Initialize(DIContainer container, IInputSceneArgs sceneArgs)
         {
             _container = container;
+
+            if (sceneArgs is not GameplayInputArgs gameplayInputArgs)
+                throw new ArgumentException($"{nameof(sceneArgs)} is not match with {typeof(GameplayInputArgs)} type");
+
+            Debug.Log($"Вы попали на уровень {gameplayInputArgs.LevelNumber}");
+            
+
 
             Debug.Log("Инициализация геймплейной сцены");
 

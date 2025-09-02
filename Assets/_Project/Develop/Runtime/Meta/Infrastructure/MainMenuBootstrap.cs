@@ -15,7 +15,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
         private DIContainer _container;
 
 
-        public override IEnumerator Initialize(DIContainer container)
+        public override IEnumerator Initialize(DIContainer container, IInputSceneArgs sceneArgs)
         {
             _container = container;
 
@@ -36,7 +36,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 
                 SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
                 ICoroutinesPerformer coroutinesPerformer =_container.Resolve<ICoroutinesPerformer>();
-                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay));
+                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, new GameplayInputArgs(2)));
             }    
         
         }
