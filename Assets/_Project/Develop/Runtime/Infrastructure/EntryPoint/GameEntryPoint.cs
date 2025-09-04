@@ -22,11 +22,11 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             Debug.Log("Процесс регистрации сервисов всего проекта"); // Debug message to indicate UPA settings are set, отладочное сообщение для указания на то, что настройки UPA установлены
 
-            DIContainer container = new DIContainer(); // Create a new instance of the DI container, создаем новый экземпляр контейнера внедрения зависимостей
+            DIContainer projectContainer = new DIContainer(); // Create a new instance of the DI container, создаем новый экземпляр контейнера внедрения зависимостей
            
-            EntryPointRegistrations.Process(container); // Process the entry point registrations, обрабатываем регистрации точек входа
+            ProjectContextRegistrations.Process(projectContainer); // Process the entry point registrations, обрабатываем регистрации точек входа
 
-            container.Resolve<ICoroutinesPerformer>().StartPerform(Initialize(container)); // Start the initialization coroutine using the coroutines performer service, запускаем корутину инициализации с использованием сервиса исполнителя корутин    
+            projectContainer.Resolve<ICoroutinesPerformer>().StartPerform(Initialize(projectContainer)); // Start the initialization coroutine using the coroutines performer service, запускаем корутину инициализации с использованием сервиса исполнителя корутин    
 
         }
 

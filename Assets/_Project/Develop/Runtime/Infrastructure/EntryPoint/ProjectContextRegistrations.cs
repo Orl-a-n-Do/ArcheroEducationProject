@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 {
-    public class EntryPointRegistrations
+    public class ProjectContextRegistrations
     {
 
         public static void Process(DIContainer container)
@@ -26,8 +26,7 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateSceneSwitcherService);
 
             container.RegisterAsSingle<ILoadingScreen>(CreateLoadingScreen);
-
-           
+        
         }
 
         private static SceneSwitcherService CreateSceneSwitcherService(DIContainer c)
