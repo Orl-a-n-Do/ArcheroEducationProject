@@ -1,11 +1,13 @@
-﻿using System.Collections;
-using Assets._Project.Develop.Runtime.Infrastructure.DI;
+﻿using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Infrastructure;
-using UnityEngine;
-using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
-using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
@@ -14,7 +16,10 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
     {
 
         private DIContainer _container;
+
         private ReactiveVariable<int> _field;
+
+        private IDisposable _disposable;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -35,15 +40,10 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
         {
             Debug.Log("Старт сцены меню");
 
-            _field = new ReactiveVariable<int>(5);
-            _field.Subscribe(OnFieldChanged);
         }
 
-        private void OnFieldChanged(int arg1, int arg2)
-        {
-            Debug.Log($"Поле изменилось. Старое значение - {arg1} , новое - {arg2}");
-        }
 
+        
 
 
         private void Update()
@@ -57,11 +57,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             }
 
 
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                _field.Value++;
-            }
-
+           
         }
 
     }
