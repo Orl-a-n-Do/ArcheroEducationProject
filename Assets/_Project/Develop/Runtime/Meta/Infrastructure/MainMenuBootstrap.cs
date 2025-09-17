@@ -1,6 +1,7 @@
 ﻿using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
@@ -16,6 +17,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
     {
 
         private DIContainer _container;
+        private WalletService _walletService;
 
         private ReactiveVariable<int> _field;
 
@@ -31,6 +33,8 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
         {
             
             Debug.Log("Инициализация сцены меню");
+
+            _walletService = _container.Resolve<WalletService>();
 
             yield break;
         }
@@ -57,7 +61,24 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             }
 
 
-           
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _walletService.Add(CurrencyTypes.Gold, 10);
+                Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
+
+            }
+
+
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (_walletService.Enough(CurrencyTypes.Gold, 10))
+                {
+                    _walletService.Spend(CurrencyTypes.Gold, 10);
+                    Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
+                }
+            }
+
         }
 
     }
