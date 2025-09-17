@@ -3,6 +3,8 @@ using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
+using Assets._Project.Develop.Runtime.Utilities.DataManagement;
+using Assets._Project.Develop.Runtime.Utilities.DataManagement.Serializes;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using System;
@@ -17,7 +19,11 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
     {
 
         private DIContainer _container;
+
         private WalletService _walletService;
+
+        private PlayerData _playerData;
+      
 
         private ReactiveVariable<int> _field;
 
@@ -35,6 +41,16 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             Debug.Log("Инициализация сцены меню");
 
             _walletService = _container.Resolve<WalletService>();
+
+            _playerData = new PlayerData();
+            _playerData.WalletData = new Dictionary<CurrencyTypes, int>()
+            {
+                {CurrencyTypes.Gold, 10 },
+                { CurrencyTypes.Diamond, 150 },
+            };
+
+           
+
 
             yield break;
         }
@@ -79,6 +95,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
                 }
             }
 
+          
         }
 
     }

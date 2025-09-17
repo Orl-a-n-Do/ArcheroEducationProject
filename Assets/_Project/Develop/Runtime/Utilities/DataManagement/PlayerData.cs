@@ -8,7 +8,8 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagement
        
         public Dictionary<CurrencyTypes, int> WalletData;
 
-
-
+      
     }
+
+  
 }
