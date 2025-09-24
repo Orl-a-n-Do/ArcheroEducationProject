@@ -4,10 +4,12 @@ using System;
 
 namespace Assets._Project.Develop.Runtime.Infrastructure.DI
 {
-    public class Registration // будем хранить способ создания сервиса;
+    public class Registration : IRegistrationOptions  // будем хранить способ создания сервиса;
     {
         private Func<DIContainer, object> _creator; // фабрика для создания сервиса;
         private object _cashedInstance; // для кэширования сервиса после его первого создания;
+
+        public bool IsNonLazy { get; private set; }
 
         public Registration(Func<DIContainer, object> creator) => _creator = creator;
 
@@ -24,6 +26,8 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
             return _cashedInstance;
         }
 
+
+        public void NonLazy() => IsNonLazy = true;
 
     }
 }

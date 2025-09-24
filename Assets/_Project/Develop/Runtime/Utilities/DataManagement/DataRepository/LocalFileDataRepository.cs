@@ -4,18 +4,18 @@ using System.IO;
 
 namespace Assets._Project.Develop.Runtime.Utilities.DataManagement.DataRepository
 {
-    public class LocalFileRepository : IDataRepository
+    public class LocalFileDataRepository : IDataRepository
     {
         private readonly string _folderPath;
         private readonly string _saveFileExtension;
 
-        public LocalFileRepository(string folderPath, string saveFileExtension)
+        public LocalFileDataRepository(string folderPath, string saveFileExtension)
         {
             _folderPath = folderPath;
             _saveFileExtension = saveFileExtension;
         }
 
-        public IEnumerator Exist(string key, Action<bool> onExistResult)
+        public IEnumerator Exists(string key, Action<bool> onExistResult)
         {
             bool exist = File.Exists(FullPathFor(key));
 

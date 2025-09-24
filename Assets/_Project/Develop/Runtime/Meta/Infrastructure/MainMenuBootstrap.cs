@@ -3,13 +3,9 @@ using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
-using Assets._Project.Develop.Runtime.Utilities.DataManagement;
-using Assets._Project.Develop.Runtime.Utilities.DataManagement.Serializes;
-using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -22,12 +18,13 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 
         private WalletService _walletService;
 
-        private PlayerData _playerData;
+        private PlayerDataProvider _playerDataProvider;
+        private ICoroutinesPerformer _coroutinesPerformer;
       
 
-        private ReactiveVariable<int> _field;
+        //private ReactiveVariable<int> _field;
 
-        private IDisposable _disposable;
+        //private IDisposable _disposable;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -42,13 +39,10 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 
             _walletService = _container.Resolve<WalletService>();
 
-            _playerData = new PlayerData();
-            _playerData.WalletData = new Dictionary<CurrencyTypes, int>()
-            {
-                {CurrencyTypes.Gold, 10 },
-                { CurrencyTypes.Diamond, 150 },
-            };
+            _playerDataProvider = _container.Resolve<PlayerDataProvider>();
+            _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
 
+         
            
 
 
@@ -95,8 +89,16 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
                 }
             }
 
-          
+            if(Input.GetKeyDown(KeyCode.S))
+            {
+                _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
+                Debug.Log("Сохранение было вызвано");
+            }
+
+
         }
+
+          
 
     }
 }

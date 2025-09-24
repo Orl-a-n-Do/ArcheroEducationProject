@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections;
+using UnityEngine;
+
+
+
+namespace Assets._Project.Develop.Runtime.Utilities.DataManagement.DataRepository
+{
+    public class PlayerPrefsDataRepository : IDataRepository
+    {
+        public IEnumerator Exists(string key, Action<bool> onExistResult)
+        {
+            bool exists = PlayerPrefs.HasKey(key);
+
+            onExistResult?.Invoke(exists);
+
+            yield break;
+        }
+
+        public IEnumerator Read(string key, Action<string> onRead)
+        {
+            string text = PlayerPrefs.GetString(key);
+
+            onRead?.Invoke(text);
+
+            yield break;
+
+        }
+
+        public IEnumerator Remove(string key)
+        {
+           PlayerPrefs.DeleteKey(key);
+
+           yield break;
+        }
+
+        public IEnumerator Write(string key, string serializedData)
+        {
+            PlayerPrefs.SetString(key, serializedData);
+            yield break;
+        }
+    }
+}

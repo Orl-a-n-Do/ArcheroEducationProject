@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Assets._Project.Develop.Runtime.Infrastructure.DI
 {
+
+
+
     public class DIContainer 
     {
       
@@ -24,7 +27,7 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
         public DIContainer(DIContainer parent) => _parent = parent;
 
 
-        public void RegisterAsSingle<T>(Func<DIContainer, T> creator)// каждая зависимость будет в единственном экземпляре;
+        public IRegistrationOptions  RegisterAsSingle<T>(Func<DIContainer, T> creator)// каждая зависимость будет в единственном экземпляре;
         {
 
             if (IsAlreadyRegister<T>())
@@ -32,9 +35,9 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
 
 
 
-            Registration registration = new(container => creator.Invoke(container)); // создаем регистрацию;
+            Registration registration = new Registration(container => creator.Invoke(container)); // создаем регистрацию;
             _container.Add(typeof(T), registration); // регистрируем в контейнере тип по которому будем запрашивать сервис;
-
+            return registration;
         }
 
         public bool IsAlreadyRegister<T>()
@@ -73,6 +76,15 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
             }
 
             throw new InvalidOperationException($"Registration for {typeof(T)} not exists");
+        }
+
+        public void Initialize()
+        {
+            foreach( Registration registration in _container.Values )
+            {
+                if( registration.IsNonLazy)
+                    registration.CreateInstanceFrom(this);
+            }
         }
     }
 }

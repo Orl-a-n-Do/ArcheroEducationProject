@@ -6,7 +6,8 @@ using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.LoadingScreen;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
-using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement; // Import the DI container namespace for dependency injection, импортируем пространство имен контейнера внедрения зависимостей
+using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider; // Import the DI container namespace for dependency injection, импортируем пространство имен контейнера внедрения зависимостей
 
 
 namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
@@ -26,6 +27,8 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
            
             ProjectContextRegistrations.Process(projectContainer); // Process the entry point registrations, обрабатываем регистрации точек входа
 
+            projectContainer.Initialize();
+
             projectContainer.Resolve<ICoroutinesPerformer>().StartPerform(Initialize(projectContainer)); // Start the initialization coroutine using the coroutines performer service, запускаем корутину инициализации с использованием сервиса исполнителя корутин    
 
         }
@@ -40,7 +43,10 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
          {
 
             ILoadingScreen loadingScreen = container.Resolve<ILoadingScreen>();
+
             SceneSwitcherService sceneSwitcherService = container.Resolve<SceneSwitcherService>();
+
+            PlayerDataProvider playerDataProvider = container.Resolve<PlayerDataProvider>();
             
             loadingScreen.Show();
            
@@ -49,7 +55,18 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             yield return container.Resolve<ConfigsProviderService>().LoadAsync();
 
-            yield return new WaitForSeconds(1f);
+            bool isPlayerDataSaveExist = false;
+
+            yield return playerDataProvider.Exists(result => isPlayerDataSaveExist = result);
+
+
+            if(isPlayerDataSaveExist) 
+                yield return playerDataProvider.Load();
+            else
+                playerDataProvider.Reset();
+
+
+                yield return new WaitForSeconds(1f);
 
             Debug.Log("Завершение инициализации сервисов");
 

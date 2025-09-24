@@ -8,7 +8,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagement.DataRepositor
         IEnumerator Read(string key, Action<string> onRead);
         IEnumerator Write(string key, string serializedData);
         IEnumerator Remove(string key);
-        IEnumerator Exist(string key, Action<bool> onExistResult);
+        IEnumerator Exists(string key, Action<bool> onExistResult);
 
     }
 }

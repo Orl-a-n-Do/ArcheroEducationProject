@@ -1,19 +1,28 @@
-﻿using Assets._Project.Develop.Runtime.Utilities.Reactive;
+﻿using Assets._Project.Develop.Runtime.Utilities.DataManagement;
+using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Assets._Project.Develop.Runtime.Meta.Features.Wallet
 {
-    public class WalletService
+    public class WalletService: IDataReader<PlayerData>, IDataWriter<PlayerData>
     {
         //Кошелек будет представлять по сути словарь где ключ это тип валют а значение реактивная переменная типа int;
 
         private readonly Dictionary<CurrencyTypes, ReactiveVariable<int>> _currencies;
 
-        public WalletService(Dictionary<CurrencyTypes, ReactiveVariable<int>> currencies)
+
+        public WalletService(
+            Dictionary<CurrencyTypes, 
+            ReactiveVariable<int>> currencies, 
+            PlayerDataProvider playerDataProvider)
         {
             _currencies = new Dictionary<CurrencyTypes, ReactiveVariable<int>>(currencies);
+            playerDataProvider.RegisterWriter(this);
+            playerDataProvider.RegisterReader(this);
         }
 
         public List<CurrencyTypes> AvailableCurrencies => _currencies.Keys.ToList();
@@ -52,6 +61,31 @@ namespace Assets._Project.Develop.Runtime.Meta.Features.Wallet
 
         }
 
+        public void ReadFrom(PlayerData data)
+        {
+            foreach(KeyValuePair<CurrencyTypes, int> currency in data.WalletData)
+            {
+                if(_currencies.ContainsKey(currency.Key))
+                    _currencies[currency.Key].Value = currency.Value;
+                else
+                    _currencies.Add(currency.Key, new ReactiveVariable<int>());
+            }
+
+
+
+        }
+
+        public void WriteTo(PlayerData data)
+        {
+            foreach (KeyValuePair<CurrencyTypes, ReactiveVariable <int>> currency in _currencies)
+            {
+                if (data.WalletData.ContainsKey(currency.Key))
+                    data.WalletData[currency.Key] = currency.Value.Value;
+                else
+                    data.WalletData.Add(currency.Key, currency.Value.Value);
+            }
+
+        }
     }
 
 }   
