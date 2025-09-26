@@ -72,7 +72,6 @@ namespace Assets._Project.Develop.Runtime.Meta.Features.Wallet
             }
 
 
-
         }
 
         public void WriteTo(PlayerData data)

@@ -1,0 +1,50 @@
+﻿using System;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.UI.CommonViews;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
+
+namespace Assets._Project.Develop.Runtime.UI.Wallet
+{
+    public class CurrencyPresenter
+    {
+        //Бизнес Логика
+        private readonly IReadOnlyVariable<int> _currency;
+        private readonly CurrencyTypes _currencyType;
+        private readonly CurrencyIconsConfig _currencyIconsConfig;
+
+
+        //Визуальная часть
+        private readonly IconTextView _view;
+        private IDisposable _disposable;
+
+        public CurrencyPresenter(IReadOnlyVariable<int> currency, 
+            CurrencyTypes currencyType, 
+            CurrencyIconsConfig currencyConfig, 
+            IconTextView view)
+        {
+            _currency = currency;
+            _currencyType = currencyType;
+            _currencyIconsConfig = currencyConfig;
+            _view = view;
+        }
+
+
+        public void Enable()// точка старта работы пресентра
+        {
+            UpdateValue(_currency.Value);
+            _view.SetIcon(_currencyIconsConfig.GetSpriteFor(_currencyType));
+
+           _disposable = _currency.Subscribe(OnCurrencyChanged);
+        }
+
+
+        public void Disable()// точка окончания работы пресентра
+        {
+            _disposable.Dispose();
+        }
+
+        private void OnCurrencyChanged(int arg1, int newValue) => UpdateValue(newValue);
+        
+        private void UpdateValue(int value) =>_view.SetText(value.ToString());
+    }
+}

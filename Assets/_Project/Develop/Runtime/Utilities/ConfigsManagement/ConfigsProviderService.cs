@@ -24,10 +24,6 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagement
             foreach (IConfigsLoader loader in _loaders)
                 yield return loader.LoadAsync(loadedConfigs => _configs.AddRange(loadedConfigs));
 
-
-
-
-
         }
 
 
