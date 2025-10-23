@@ -2,12 +2,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Assets._Project.Develop.Runtime.UI.Core;
 
 
 
 namespace Assets._Project.Develop.Runtime.UI.CommonViews
 {
-    public class IconTextView : MonoBehaviour
+    public class IconTextView : MonoBehaviour, IView
     {
         [SerializeField] private TMP_Text _text;
         [SerializeField] private Image _icon; 

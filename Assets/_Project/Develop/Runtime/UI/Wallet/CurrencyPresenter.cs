@@ -1,11 +1,12 @@
 ﻿using System;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI.CommonViews;
+using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 
 namespace Assets._Project.Develop.Runtime.UI.Wallet
 {
-    public class CurrencyPresenter
+    public class CurrencyPresenter : IPresenter
     {
         //Бизнес Логика
         private readonly IReadOnlyVariable<int> _currency;
@@ -28,8 +29,10 @@ namespace Assets._Project.Develop.Runtime.UI.Wallet
             _view = view;
         }
 
+        public IconTextView View => _view;
 
-        public void Enable()// точка старта работы пресентра
+
+        public void Initialize()// точка старта работы пресентра
         {
             UpdateValue(_currency.Value);
             _view.SetIcon(_currencyIconsConfig.GetSpriteFor(_currencyType));
@@ -38,7 +41,7 @@ namespace Assets._Project.Develop.Runtime.UI.Wallet
         }
 
 
-        public void Disable()// точка окончания работы пресентра
+        public void Dispose()// точка окончания работы пресентра
         {
             _disposable.Dispose();
         }

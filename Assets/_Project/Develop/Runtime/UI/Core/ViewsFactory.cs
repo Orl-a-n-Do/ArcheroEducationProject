@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
+using UnityEngine;
+using Object = UnityEngine.Object;
+
+namespace Assets._Project.Develop.Runtime.UI.Core
+{
+    public class ViewsFactory
+    {
+        private readonly ResourcesAssetsLoader _resourscesAssetsLoader;
+
+        private readonly Dictionary<string, string> _viewIDToResourcesPath = new Dictionary<string, string>()
+        {
+            {ViewIDs.CurrencyView,"UI/Wallet/CurrencyView" },
+            {ViewIDs.MainMenuScreen,"UI/MainMenu/MainMenuScreenView" },
+            {ViewIDs.TestPopup,"UI/TestPopup" }
+
+        };
+
+
+
+        public ViewsFactory(ResourcesAssetsLoader resourscesAssetsLoader)
+        {
+            _resourscesAssetsLoader = resourscesAssetsLoader;
+        }
+
+        public TView Create<TView>(string viewID, Transform parent = null) where TView: MonoBehaviour, IView
+        {
+            if (_viewIDToResourcesPath.TryGetValue(viewID, out string resourcePath) == false)
+                throw new ArgumentException($"You didn t set resorce path for {typeof(TView)}, searched id :{viewID}");
+
+            GameObject prefab = _resourscesAssetsLoader.Load<GameObject>(resourcePath);
+            GameObject instance = Object.Instantiate(prefab, parent);
+            TView view = instance.GetComponent<TView>();
+
+            if (view == null)
+                throw new InvalidOperationException($"Not found {typeof(TView)} component on View instance");
+
+            return view;
+        }
+
+        public void Release<TView>(TView view) where TView : MonoBehaviour, IView
+        {
+
+            Object.Destroy(view.gameObject);
+
+        }
+    }
+
+
+}

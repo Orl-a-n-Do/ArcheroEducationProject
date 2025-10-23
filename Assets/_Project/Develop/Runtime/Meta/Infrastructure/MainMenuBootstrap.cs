@@ -2,6 +2,9 @@
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.UI;
+using Assets._Project.Develop.Runtime.UI.CommonViews;
+using Assets._Project.Develop.Runtime.UI.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
@@ -20,10 +23,10 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 
         private PlayerDataProvider _playerDataProvider;
         private ICoroutinesPerformer _coroutinesPerformer;
-      
+
+
 
         //private ReactiveVariable<int> _field;
-
         //private IDisposable _disposable;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
@@ -42,10 +45,6 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             _playerDataProvider = _container.Resolve<PlayerDataProvider>();
             _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
 
-         
-           
-
-
             yield break;
         }
 
@@ -57,7 +56,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
         }
 
 
-        
+
 
 
         private void Update()
@@ -89,16 +88,13 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S))
             {
                 _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
                 Debug.Log("Сохранение было вызвано");
             }
 
-
         }
-
-          
 
     }
 }

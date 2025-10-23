@@ -17,6 +17,8 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagement
         private readonly ILoadingScreen _loadingScreen;
         private readonly DIContainer _project—ontainer;
 
+        private DIContainer _currentSceneContainer;
+
         public SceneSwitcherService(
             SceneLoaderService sceneLoaderService,
             ILoadingScreen loadingScreen,
@@ -33,6 +35,8 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagement
              Debug.Log($"SceneLoader: {_sceneLoaderService != null}, LoadingScreen: {_loadingScreen != null}");
             _loadingScreen.Show();
 
+            _currentSceneContainer?.Dispose();
+
             yield return _sceneLoaderService.LoadAsync(Scenes.Empty);
             yield return _sceneLoaderService.LoadAsync(sceneName);
 
@@ -44,11 +48,11 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagement
 
 
 
-            DIContainer sceneContainer = new DIContainer(_project—ontainer);
+            _currentSceneContainer = new DIContainer(_project—ontainer);
 
-            sceneBootstrap.ProcessRegistration(sceneContainer, sceneArgs);
+            sceneBootstrap.ProcessRegistration(_currentSceneContainer, sceneArgs);
 
-            sceneContainer.Initialize();
+            _currentSceneContainer.Initialize();
 
 
             yield return sceneBootstrap.Initialize();
