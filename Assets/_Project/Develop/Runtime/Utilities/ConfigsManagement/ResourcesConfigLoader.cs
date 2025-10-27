@@ -1,3 +1,4 @@
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Levels;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using System;
 using System.Collections;
@@ -12,7 +13,8 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagement
         private readonly Dictionary<Type, string> _configsResourcesPaths = new()
         {
             {typeof(StartWalletConfigs),"Configs/Meta/Wallet/StartWalletConfigs" },
-            {typeof(CurrencyIconsConfig),"Configs/Meta/Wallet/CurrencyIconsConfigs" }
+            {typeof(CurrencyIconsConfig),"Configs/Meta/Wallet/CurrencyIconsConfigs" },
+            {typeof(LevelsListConfig),"Configs/Gameplay/Levels/LevelsListConfig" }
 
         };
 

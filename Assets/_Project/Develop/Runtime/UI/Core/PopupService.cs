@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets._Project.Develop.Runtime.UI.Core.LevelMenuPopup;
+using Assets._Project.Develop.Runtime.UI.Core.LevelsMenuPopup;
 using Assets._Project.Develop.Runtime.UI.Core.TestPopup;
 using UnityEngine;
 
@@ -34,6 +36,19 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
             return popup;
         }
+
+        public LevelsMenuPopupPresenter OpenLevelsMenuPopup()
+        {
+            LevelsMenuPopupView view = ViewsFactory.Create<LevelsMenuPopupView>(ViewIDs.LevelsMenuPopup, PopupLayer);
+
+            LevelsMenuPopupPresenter popup = _presentersFactory.CreateLevelsMenuPopupPresenter(view);
+
+            OnPopupCreated(popup, view);
+
+            return popup;
+        }
+
+
 
         public void ClosePopup(PopupPresenterBase popup)
         {

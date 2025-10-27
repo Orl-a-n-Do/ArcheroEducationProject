@@ -12,14 +12,20 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         [SerializeField] private CanvasGroup _mainGroup;
         [SerializeField]private Image _anticlicker;
+        [SerializeField] private CanvasGroup _body;
 
-        [SerializeField] private Transform _body;
+
+
+        [SerializeField] private PopupAnimationTypes _animationType;
+
+        private float _anticlickerDefaultAplpha;
 
         [SerializeField] private Tween _currentAnimation;
 
 
         private void Awake()
         {
+            _anticlickerDefaultAplpha = _anticlicker.color.a;
             _mainGroup.alpha = 0;
         }
 
@@ -35,19 +41,10 @@ namespace Assets._Project.Develop.Runtime.UI.Core
             OnPreShow();
 
             _mainGroup.alpha = 1; // тут появяться анимации
-            
-            Sequence animation = DOTween.Sequence();
-            
-            animation
-                .Append(_anticlicker
-                    .DOFade(0.75f, 0.2f)
-                    .From(0))              
-                .Join(_body
-                    .DOScale(1, 0.5f)
-                    .From(0)
-                    .SetEase(Ease.OutBack));
 
-
+            Sequence animation = PopupAnimationsCreator
+                .CreateShowAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAplpha);
+             
 
             ModifyShowAnimation(animation);
 
@@ -65,7 +62,8 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
             OnPreHide();
 
-            Sequence animation = DOTween.Sequence();
+            Sequence animation = PopupAnimationsCreator
+                .CreateHideAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAplpha);
 
             ModifyHideAnimation(animation);
 
@@ -100,8 +98,6 @@ namespace Assets._Project.Develop.Runtime.UI.Core
         {
             if (_currentAnimation != null) 
                 _currentAnimation.Kill();
-
-
         }
 
         

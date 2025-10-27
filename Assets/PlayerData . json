@@ -1,6 +1,7 @@
 {
   "WalletData": {
-    "Gold": 210,
+    "Gold": 100,
     "Diamond": 20
-  }
+  },
+  "CompletedLevels": [1, 2]
 }

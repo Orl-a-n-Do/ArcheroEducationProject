@@ -7,6 +7,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagement
     {
        
         public Dictionary<CurrencyTypes, int> WalletData;
+        public List<int> CompletedLevels;
   
     }
 

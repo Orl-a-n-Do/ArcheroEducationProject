@@ -1,5 +1,6 @@
 ﻿using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.LoadingScreen;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
@@ -31,7 +32,6 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             container.RegisterAsSingle(CreateResourcesAssetsLoader);
 
-
             container.RegisterAsSingle(CreateSceneLoaderService);
 
             container.RegisterAsSingle(CreateSceneSwitcherService);
@@ -48,11 +48,17 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
 
+            container.RegisterAsSingle(CreateLevelsProgressionService).NonLazy();
+
         }
+
+        private static LevelsProgressionService CreateLevelsProgressionService(DIContainer c)
+            => new LevelsProgressionService(c.Resolve<PlayerDataProvider>());
+
+
 
         private static ViewsFactory CreateViewsFactory(DIContainer c)
             => new ViewsFactory(c.Resolve<ResourcesAssetsLoader>());
-
 
 
         private static ProjectPresentersFactory CreateProjectPresentersFactory(DIContainer с)

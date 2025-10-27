@@ -15,6 +15,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider
             {
 
                 WalletData = InitWalletData(),
+                CompletedLevels = new List<int>(),
 
             };
         }
