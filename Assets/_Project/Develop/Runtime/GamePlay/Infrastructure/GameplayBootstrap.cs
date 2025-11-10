@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using Assets._Project.Develop.Runtime.Configs.GamePlay;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
@@ -14,6 +16,10 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
     {
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
+
+        private WalletService _walletService;
+
+        [SerializeField] private TestGamePlay _testGamePlay;
 
 
 
@@ -28,7 +34,6 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             GamePlayContextRegistration.Process(_container, _inputArgs);
 
-
         }
 
 
@@ -39,6 +44,10 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             
             Debug.Log("Инициализация геймплейной сцены");
 
+            _walletService = _container.Resolve<WalletService>();
+
+            _testGamePlay.Initialize(_container);
+
             yield break;
         }
 
@@ -48,6 +57,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
+            _testGamePlay.Run();
         }
 
 
