@@ -2,6 +2,7 @@
 using System.Collections;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Configs.GamePlay;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
@@ -21,6 +22,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         [SerializeField] private TestGamePlay _testGamePlay;
 
+        private EntitiesLifeContext _entitiesLifeContext;
 
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
@@ -46,6 +48,9 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             _walletService = _container.Resolve<WalletService>();
 
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+
+
             _testGamePlay.Initialize(_container);
 
             yield break;
@@ -63,6 +68,11 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         private void Update()
         {
+            _entitiesLifeContext?.Update(Time.deltaTime);
+
+
+
+
             if (Input.GetKeyDown(KeyCode.F))
             {
 

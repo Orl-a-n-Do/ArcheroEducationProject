@@ -11,6 +11,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
         private DIContainer _container;
         private EntitiesFactory _entitiesFactory;
 
+        private Entity _entity;
 
 
         private bool _isRunning;
@@ -26,12 +27,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
 
         public void Run()
         {
-            Entity entity = _entitiesFactory.CreateTestEntity();
-
-
-            Debug.Log("Направление движения:" + entity.GetComponent<MoveDirection>().Value.Value.ToString());
-            Debug.Log("Скорость движения:" + entity.GetComponent<MoveSpeed>().Value.Value.ToString());
-
+            _entity = _entitiesFactory.CreateTestEntity(Vector3.zero);
 
             _isRunning = true;
         }
@@ -42,7 +38,9 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
             if (_isRunning == false)
                 return;
 
+            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
+            _entity.GetComponent<MoveDirection>().Value.Value = input;
         }
 
     }

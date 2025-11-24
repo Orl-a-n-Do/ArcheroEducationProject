@@ -4,7 +4,7 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.System;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 {
-    public class Entity
+    public partial class Entity: IDisposable
     {
         private readonly Dictionary<Type, IEntityComponent> _components = new();
 
@@ -16,6 +16,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
         private bool _isInit;
 
+     
         public void Initialize()
         {
             foreach(IInitializableSystem initializable in _initializable)

@@ -15,11 +15,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeat
         public ReactiveVariable<float> Value;
     }
 
-    public class RigidbodyCombonent: IEntityComponent
-    {
-        public Rigidbody Value;
-    }
-
+  
 
 
 }
