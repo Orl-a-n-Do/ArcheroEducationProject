@@ -21,13 +21,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
             _monoEntitiesFactory = _container.Resolve<MonoEntitiesFactory>();
         }
 
-        public Entity CreateTestEntity(Vector3 position) //Создание и кофигурирование сущностей
+        public Entity CreateGhost(Vector3 position) //Создание и кофигурирование сущностей
         {
            Entity entity = CreateEmpty();
 
-           _monoEntitiesFactory.Create(entity, position, "Entities/TestEntity");
-
-
+           _monoEntitiesFactory.Create(entity, position, "Entities/Ghost");
 
 
             entity
