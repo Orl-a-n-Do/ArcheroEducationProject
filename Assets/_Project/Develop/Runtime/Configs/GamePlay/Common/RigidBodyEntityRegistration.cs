@@ -9,7 +9,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Common
     {
         public override void Register(Entity entity)
         {
-            entity.AddComponent(new RigidbodyComponent() { Value = GetComponent<Rigidbody>() });
+            entity.AddRigidbody(GetComponent<Rigidbody>());
         }
     }
 }

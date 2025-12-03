@@ -7,27 +7,28 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 {
     public partial class Entity
     {
-        
-        public Rigidbody Rigidbody => RigidbodyC.Value;
+        //public RigidbodyComponent RigidbodyС => GetComponent<RigidbodyComponent>();
+        //public Rigidbody Rigidbody => RigidbodyС.Value;
 
-        public Entity AddRigidbody(Rigidbody value)
-        {
-            return AddComponent(new RigidbodyComponent() { Value = value });
+      //  public Entity AddRigidbody(Rigidbody value)
+      //  {
+      //      return AddComponent(new RigidbodyComponent() { Value = value });
+      //  }
 
-        }
 
-        
-        public ReactiveVariable<Vector3> MoveDirection => MoveDirectionC.Value;
+      //// public MoveDirection MoveDirectionС => GetComponent<MoveDirection>();
 
-        public Entity AddMoveDirection(ReactiveVariable<Vector3> value)
-        {
-            return AddComponent(new MoveDirection() { Value = value });
+      ////  public ReactiveVariable<Vector3> MoveDirection => MoveDirectionС.Value;
 
-        }
-        public Entity AddMoveDirection()
-        {
-            return AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>() });
+      //  public Entity AddMoveDirection(ReactiveVariable<Vector3> value)
+      //  {
+      //      return AddComponent(new MoveDirection() { Value = value });
 
-        }
+      //  }
+        //public Entity AddMoveDirection()
+        //{
+        //    return AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>() });
+
+        //}
     }
 }

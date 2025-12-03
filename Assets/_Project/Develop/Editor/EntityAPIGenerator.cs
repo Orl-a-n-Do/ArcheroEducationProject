@@ -7,6 +7,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 
@@ -21,6 +22,7 @@ namespace Assets._Project.Develop.Editor
             = Path.Combine(Application.dataPath, "_Project/Develop/Runtime/Configs/GamePlay/EntitiesCore/Generated/EntityAPI.cs");
 
 
+        [InitializeOnLoadMethod] // Этот метод будет выполняться при подгрузке редактора Unity
         [MenuItem("Tools/GenerateEntityAPI")]
         private static void Generate()
         {
@@ -42,11 +44,42 @@ namespace Assets._Project.Develop.Editor
                 string fullTypeName = componentType.FullName;
 
                 string componentName = RemoveSuffixIsExist(typeName,"Component");
-                string modifiedComponentName = componentName + "С";
+                string modifiedComponentName = componentName + "C";
 
                 //свойство для получения компонента
                 sb.AppendLine($"\t\tpublic {fullTypeName} {modifiedComponentName} => GetComponent<{fullTypeName}>();");
                 sb.AppendLine();
+
+                if(HasSingleField(componentType, out FieldInfo field) && field.Name == "Value")
+                {
+                    sb.AppendLine($"\t\tpublic {GetValidTypeName(field.FieldType)} {componentName} => {modifiedComponentName}.{field.Name};");
+                    sb.AppendLine();
+
+                    if(HasEmptyConstructor(field.FieldType))
+                    {
+                        string initializer = "{ " + field.Name + " = new " + GetValidTypeName(field.FieldType) + "() }";
+
+                        sb.AppendLine($"\t\tpublic {typeof(Entity).FullName} Add{componentName}()");
+                        sb.AppendLine("\t\t{");
+                        sb.AppendLine($"\t\t\treturn AddComponent(new {fullTypeName}() {initializer}); ");
+                        sb.AppendLine("\t\t}");
+                        sb.AppendLine();
+
+                    }
+
+
+
+                }
+
+                // метод add  с указанием параметров;
+                string componentParametrs = GetParametrs(componentType);
+
+                sb.AppendLine($"\t\tpublic {typeof(Entity).FullName} Add{componentName}({componentParametrs})");
+                sb.AppendLine("\t\t{");
+                sb.AppendLine($"\t\t\treturn AddComponent(new {fullTypeName}() {GetInitializer(componentType)}); ");
+                sb.AppendLine("\t\t}");
+                sb.AppendLine();
+
             }
 
             sb.AppendLine("\t}");
@@ -59,6 +92,81 @@ namespace Assets._Project.Develop.Editor
             AssetDatabase.SaveAssets();
 
         }
+
+
+        private static bool HasEmptyConstructor(Type type)
+        {
+            return
+                type.GetConstructor(Type.EmptyTypes) != null
+                && type.IsSubclassOf(typeof(UnityEngine.Object)) == false;
+
+        }
+
+
+
+
+
+
+       private static string GetInitializer(Type type)
+       {
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            if (fields.Any() == false)
+                return "";
+
+            IEnumerable<string> initializers = fields
+                .Select(field => $"{field.Name} = {GetVariableNameFrom(field.Name)}");
+
+            return "{" + string.Join(", ", initializers) + "}";
+
+       }
+
+
+
+
+
+        private static string GetParametrs(Type type)
+        {
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            if (fields.Any() == false)
+                return null;
+
+            IEnumerable<string> parametrs = fields
+                .Select(field => $"{GetValidTypeName(field.FieldType)} {GetVariableNameFrom(field.Name)}");
+
+            return string.Join(",", parametrs);
+
+        }
+
+
+
+
+
+
+        public static string GetVariableNameFrom(string name) => char.ToLowerInvariant(name[0]) + name.Substring(1);
+
+
+
+
+
+        private static bool HasSingleField(Type type, out FieldInfo field)
+        {
+           FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);//Получение массива о информации о его полях
+
+            if (fields.Length != 1)
+            {
+
+                field = null;
+                return false;
+
+            }
+
+            field = fields[0]; 
+            return true;
+
+        }
+
 
         private static string RemoveSuffixIsExist(string str, string suffix)
         {
@@ -81,7 +189,46 @@ namespace Assets._Project.Develop.Editor
                     && typeof(IEntityComponent).IsAssignableFrom(type));
         }
 
+        public static string GetValidTypeName(Type type)
+        {
+            if (type.IsGenericType)
+            {
+                StringBuilder sb = new StringBuilder();
 
+                string fullTypeName = type.FullName;
+                var backtickIndex = fullTypeName.IndexOf('`');
+
+                if (backtickIndex >= 0)
+                    fullTypeName = fullTypeName.Substring(0, backtickIndex);
+
+                sb.Append(fullTypeName);
+                sb.Append("<");
+
+                Type[] genericArgs = type.GetGenericArguments();
+
+                for (int i = 0; i < genericArgs.Length; i++)
+                {
+                    if (i > 0)
+                        sb.Append(", ");
+                    
+                    sb.Append(GetValidTypeName(genericArgs[i]));
+                }
+
+                sb.Append(">");
+                return sb.ToString();
+            }
+            else
+            {
+                 // Используем алиасы для примитивных типов
+                if (type == typeof(float)) return "float";
+                if (type == typeof(int)) return "int";
+                if (type == typeof(bool)) return "bool";
+                if (type == typeof(string)) return "string";
+                if (type == typeof(double)) return "double";
+                
+                return type.FullName;
+            }
+        }
 
 
     }
