@@ -38,6 +38,15 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
             if (_isRunning == false)
                 return;
 
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                _entity.CurrentHealth.Value -= 50;
+                Debug.Log("Текущий уровень здоровья :" + _entity.CurrentHealth.Value.ToString());
+            }
+
+
+
+
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
             _entity.MoveDirection.Value = input;
