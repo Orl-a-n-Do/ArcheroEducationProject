@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
+﻿using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.System;
-using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
