@@ -22,10 +22,13 @@ namespace Assets._Project.Develop.Editor
             = Path.Combine(Application.dataPath, "_Project/Develop/Runtime/Configs/GamePlay/EntitiesCore/Generated/EntityAPI.cs");
 
 
-        [InitializeOnLoadMethod] // Этот метод будет выполняться при подгрузке редактора Unity
         [MenuItem("Tools/GenerateEntityAPI")]
         private static void Generate()
         {
+            Debug.Log("=== GENERATOR STARTED ===");
+            Debug.Log($"Output path: {OutputPath}");
+            Debug.Log($"File exists: {File.Exists(OutputPath)}");
+            
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine($"namespace {typeof(Entity).Namespace}");
@@ -87,10 +90,14 @@ namespace Assets._Project.Develop.Editor
             sb.AppendLine("}");
 
             File.WriteAllText(OutputPath, sb.ToString());
+            
+            Debug.Log("=== FILE WRITTEN ===");
+            Debug.Log($"Generated {componentTypes.Count()} components");
 
             AssetDatabase.Refresh();
             AssetDatabase.SaveAssets();
-
+            
+            Debug.Log("=== GENERATOR FINISHED ===");
         }
 
 
@@ -191,15 +198,29 @@ namespace Assets._Project.Develop.Editor
 
         public static string GetValidTypeName(Type type)
         {
+            Debug.Log($"Processing type: {type.FullName}");
+            
+            // Специальная обработка ValueTuple через строковые операции
+            string typeFullName = type.FullName ?? "";
+            if (typeFullName.Contains("ValueTuple") && typeFullName.Contains("Single"))
+            {
+                Debug.Log("Found ValueTuple - replacing with global:: version");
+                return typeFullName.Replace("System.ValueTuple", "global::System.ValueTuple").Replace("System.Single", "float");
+            }
+            
             if (type.IsGenericType)
             {
                 StringBuilder sb = new StringBuilder();
 
-                string fullTypeName = type.FullName;
+                string fullTypeName = type.GetGenericTypeDefinition().FullName;
                 var backtickIndex = fullTypeName.IndexOf('`');
 
                 if (backtickIndex >= 0)
                     fullTypeName = fullTypeName.Substring(0, backtickIndex);
+
+                // Добавляем global:: для System типов
+                if (fullTypeName != null && fullTypeName.StartsWith("System."))
+                    fullTypeName = "global::" + fullTypeName;
 
                 sb.Append(fullTypeName);
                 sb.Append("<");
@@ -225,6 +246,13 @@ namespace Assets._Project.Develop.Editor
                 if (type == typeof(bool)) return "bool";
                 if (type == typeof(string)) return "string";
                 if (type == typeof(double)) return "double";
+                
+                // Обработка System типов с global:: префиксом
+                string typeName = type.FullName ?? "";
+                if (typeName.StartsWith("System."))
+                {
+                    return "global::" + typeName;
+                }
                 
                 return type.FullName;
             }
