@@ -77,6 +77,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> MaxHealth => MaxHealthC.Value;
 
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddMaxHealth()
+
+
 		{
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.MaxHealth() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float>() }); 
 		}
