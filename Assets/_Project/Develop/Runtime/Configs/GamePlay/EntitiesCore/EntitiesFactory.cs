@@ -5,6 +5,7 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Mono;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle;
+using Assets._Project.Develop.Runtime.Utilities.Conditions;
 
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
@@ -41,7 +42,18 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
                  .AddInDeathProcess()
                  .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
                  .AddDeathProcessCurrentTime();
-                   
+
+            ICompositeCondition canMove = new CompositeCondition()
+                   .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
+                  .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            entity
+                .AddCanMove(canMove)
+                .AddCanRotate(canRotate);
+
+            
 
             entity
                 .AddSystem(new RigidbodyMovementSystem())
