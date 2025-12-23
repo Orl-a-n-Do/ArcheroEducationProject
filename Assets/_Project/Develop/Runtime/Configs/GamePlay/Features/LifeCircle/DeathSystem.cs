@@ -9,7 +9,6 @@ namespace ArcheroEducationProject.Assets._Project.Develop.Runtime.Configs.GamePl
     public class DeathSystem : IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<bool> _isDead;
-
         private ReactiveVariable<float> _currentHealth;
 
 
@@ -27,13 +26,10 @@ namespace ArcheroEducationProject.Assets._Project.Develop.Runtime.Configs.GamePl
             if (_isDead.Value)
                 return;
 
-
-
             if (_currentHealth.Value <= 0)
             {
                 _isDead.Value = true;
-                Debug.Log("ß óìåð(");
-
+                Debug.Log("Ð¯ ÑƒÐ¼ÐµÑ€!");
 
             }
         }

@@ -21,5 +21,23 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle
 
     }
 
+    public class DeathProcessInitialTime : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+
+    }
+
+    public class DeathProcessCurrentTime : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+
+    }
+
+    public class InDeathProcess : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+
+    }
 
 }
+
