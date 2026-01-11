@@ -6,6 +6,8 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Mono;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage;
+using Assets._Project.Develop.Runtime.Utilities;
 
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
@@ -41,7 +43,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
                  .AddIsDead()
                  .AddInDeathProcess()
                  .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
-                 .AddDeathProcessCurrentTime();
+                 .AddDeathProcessCurrentTime()
+                 .AddTakeDamageRequest()
+                 .AddTakeDamageEvent()
+                 .AddContactDetectingMask(1 << LayerMask.NameToLayer("Characters"))
+                 .AddContactCollidersBuffer(new Buffer<Collider>(64));
 
             ICompositeCondition canMove = new CompositeCondition()
                    .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -49,15 +55,32 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
             ICompositeCondition canRotate = new CompositeCondition()
                   .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
+            ICompositeCondition mustDie = new CompositeCondition()
+                 .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                 .Add(new FuncCondition(() => entity.IsDead.Value))
+                 .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                   .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+
             entity
                 .AddCanMove(canMove)
-                .AddCanRotate(canRotate);
+                .AddCanRotate(canRotate)
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage);
+                
 
             
 
             entity
                 .AddSystem(new RigidbodyMovementSystem())
                 .AddSystem(new RigidbodyRotationSystem())
+                .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
