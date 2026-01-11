@@ -9,7 +9,6 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors
   {
         public CapsuleCollider Value;
 
-
   }
 
   public class ContactDetectingMask: IEntityComponent
@@ -24,5 +23,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors
 
   }
 
+
+  public class ContactEntitiesBuffer : IEntityComponent
+  {
+     public Buffer<Entity> Value;
+
+  }
 
 }

@@ -29,6 +29,15 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.ContactCollidersBuffer() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.ContactEntitiesBuffer ContactEntitiesBufferC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.ContactEntitiesBuffer>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Buffer<Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity> ContactEntitiesBuffer => ContactEntitiesBufferC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddContactEntitiesBuffer(Assets._Project.Develop.Runtime.Utilities.Buffer<Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.ContactEntitiesBuffer() {Value = value}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
