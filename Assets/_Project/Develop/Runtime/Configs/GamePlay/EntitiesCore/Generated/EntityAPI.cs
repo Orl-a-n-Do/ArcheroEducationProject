@@ -214,6 +214,34 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.InDeathProcess() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.DisableCollidersOnDeath DisableCollidersOnDeathC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.DisableCollidersOnDeath>();
+
+		public global::System.Collections.Generic.List<UnityEngine.Collider> DisableCollidersOnDeath => DisableCollidersOnDeathC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddDisableCollidersOnDeath()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.DisableCollidersOnDeath() { Value = new global::System.Collections.Generic.List<UnityEngine.Collider>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddDisableCollidersOnDeath(global::System.Collections.Generic.List<UnityEngine.Collider> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.DisableCollidersOnDeath() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeDamage.BodyContactDamage BodyContactDamageC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeDamage.BodyContactDamage>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> BodyContactDamage => BodyContactDamageC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddBodyContactDamage()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeDamage.BodyContactDamage() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddBodyContactDamage(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeDamage.BodyContactDamage() {Value = value}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent<float> TakeDamageRequest => TakeDamageRequestC.Value;

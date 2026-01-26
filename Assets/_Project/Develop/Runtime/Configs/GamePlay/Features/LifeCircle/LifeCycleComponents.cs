@@ -1,6 +1,8 @@
-﻿using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
+﻿using System.Collections.Generic;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle
 {
@@ -51,5 +53,10 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle
 
     }
 
+    public class DisableCollidersOnDeath : IEntityComponent
+    {
+        public List<Collider> Value;
+
+    }
 }
 

@@ -13,6 +13,13 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors
         private Buffer<Collider> _contacts;
         private Buffer<Entity> _contactsEntities;
 
+        private readonly CollidersRegistryService _colllidersRegistryService;
+
+        public BodyContactsEntitiesFilterSystem(CollidersRegistryService colllidersRegistryService)
+        {
+            _colllidersRegistryService = colllidersRegistryService;
+        }
+
         public void OnInit(Entity entity)
         {
             _contacts = entity.ContactCollidersBuffer;
@@ -27,7 +34,17 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors
             {
                 Collider collider = _contacts.Items[i];
 
+                Entity contactEntity = _colllidersRegistryService.GetBy(collider);
+
+                if (contactEntity != null)
+                {
+                    _contactsEntities.Items[_contactsEntities.Count] = contactEntity;
+                    _contactsEntities.Count++;
+                }
+
             }
+
+            Debug.Log("Контакты сущностей: " + _contactsEntities.Count);
                 
         }
     }
