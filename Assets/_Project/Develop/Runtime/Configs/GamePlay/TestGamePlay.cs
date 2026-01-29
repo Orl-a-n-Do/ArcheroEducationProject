@@ -1,5 +1,4 @@
 ﻿using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
-using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
@@ -27,7 +26,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
 
         public void Run()
         {
-            _entity = _entitiesFactory.CreateGhost(Vector3.zero);
+            _entity = _entitiesFactory.CreateHero(Vector3.zero);
             _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
 
             _isRunning = true;
@@ -45,6 +44,12 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
                 //Debug.Log("Текущий уровень здоровья :" + _entity.CurrentHealth.Value.ToString());
             }
 
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                _entity.StartAttackRequest.Invoke();
+                //Debug.Log("Текущий уровень здоровья :" + _entity.CurrentHealth.Value.ToString());
+            }
 
 
 

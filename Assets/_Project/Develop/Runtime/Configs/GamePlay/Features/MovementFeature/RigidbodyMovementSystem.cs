@@ -4,6 +4,7 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.System;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature
 {
@@ -13,6 +14,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeat
         private ReactiveVariable<Vector3> _moveDirection;
         private ReactiveVariable<float> _moveSpeed;
         private Rigidbody _rigidbody;
+        private ReactiveVariable<bool> _isMoving;
 
         private ICompositeCondition _canMove;
 
@@ -21,6 +23,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeat
             _moveDirection = entity.MoveDirection;
             _moveSpeed = entity.MoveSpeed;
             _rigidbody = entity.Rigidbody;
+            _isMoving = entity.IsMoving;
 
             _canMove = entity.CanMove;
         }
@@ -37,7 +40,10 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeat
 
            Vector3 velocity = _moveDirection.Value.normalized * _moveSpeed.Value;
 
-           _rigidbody.velocity = velocity;  
+
+            _isMoving.Value = velocity.magnitude > 0;
+
+            _rigidbody.velocity = velocity;  
 
         }
     }
