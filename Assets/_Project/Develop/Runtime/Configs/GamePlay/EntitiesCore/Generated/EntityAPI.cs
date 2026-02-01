@@ -38,6 +38,29 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.ContactEntitiesBuffer() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.DeathMask DeathMaskC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.DeathMask>();
+
+		public UnityEngine.LayerMask DeathMask => DeathMaskC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddDeathMask(UnityEngine.LayerMask value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.DeathMask() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchDeathMask IsTouchDeathMaskC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchDeathMask>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> IsTouchDeathMask => IsTouchDeathMaskC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddIsTouchDeathMask()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchDeathMask() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddIsTouchDeathMask(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchDeathMask() {Value = value}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
@@ -375,6 +398,94 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackDelayTimeEndEvent(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent value)
 		{
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackDelayTimeEndEvent() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InstantAttackDamage InstantAttackDamageC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InstantAttackDamage>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> InstantAttackDamage => InstantAttackDamageC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddInstantAttackDamage()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InstantAttackDamage() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddInstantAttackDamage(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InstantAttackDamage() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.ShootPoint ShootPointC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.ShootPoint>();
+
+		public UnityEngine.Transform ShootPoint => ShootPointC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddShootPoint(UnityEngine.Transform value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.ShootPoint() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.MustCancelAttack MustCancelAttackC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.MustCancelAttack>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition MustCancelAttack => MustCancelAttackC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddMustCancelAttack(Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.MustCancelAttack() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCanceledEvent AttackCanceledEventC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCanceledEvent>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent AttackCanceledEvent => AttackCanceledEventC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCanceledEvent()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCanceledEvent() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCanceledEvent(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCanceledEvent() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownInitialTime AttackCooldownInitialTimeC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownInitialTime>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> AttackCooldownInitialTime => AttackCooldownInitialTimeC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCooldownInitialTime()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownInitialTime() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCooldownInitialTime(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownInitialTime() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownCurrentTime AttackCooldownCurrentTimeC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownCurrentTime>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> AttackCooldownCurrentTime => AttackCooldownCurrentTimeC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCooldownCurrentTime()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownCurrentTime() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddAttackCooldownCurrentTime(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.AttackCooldownCurrentTime() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InAttackCooldown InAttackCooldownC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InAttackCooldown>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> InAttackCooldown => InAttackCooldownC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddInAttackCooldown()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InAttackCooldown() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddInAttackCooldown(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.InAttackCooldown() {Value = value}); 
 		}
 
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage.TakeDamageRequest>();
