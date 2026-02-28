@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
@@ -9,8 +10,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
     {
         private DIContainer _container;
         private EntitiesFactory _entitiesFactory;
+        private BrainsFactory _brainsFactory;
+
 
         private Entity _entity;
+        private Entity _ghost;
 
 
         private bool _isRunning;
@@ -20,6 +24,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
         {
             _container = container;
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
+            _brainsFactory = _container.Resolve<BrainsFactory>();
 
         }
 
@@ -27,7 +32,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
         public void Run()
         {
             _entity = _entitiesFactory.CreateHero(Vector3.zero);
-            _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
+            _ghost = _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
 
             _isRunning = true;
         }
@@ -50,6 +55,9 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay
                 _entity.StartAttackRequest.Invoke();
                 //Debug.Log("Текущий уровень здоровья :" + _entity.CurrentHealth.Value.ToString());
             }
+
+            if (Input.GetKeyDown(KeyCode.I))
+                _brainsFactory.CreateGhostBrain(_ghost);
 
 
 

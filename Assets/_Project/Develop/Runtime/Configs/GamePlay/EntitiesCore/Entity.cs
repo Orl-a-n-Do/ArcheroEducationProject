@@ -16,7 +16,9 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
         private bool _isInit;
 
-     
+        public bool IsInit => _isInit;// по этому свойству проверяем сущность работает или релизнуто 
+
+
         public void Initialize()
         {
             foreach(IInitializableSystem initializable in _initializable)

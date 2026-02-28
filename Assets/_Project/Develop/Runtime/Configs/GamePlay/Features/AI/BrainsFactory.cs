@@ -12,11 +12,13 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
     {
         private readonly DIContainer _container;
         private readonly TimerServiceFactory _timerServiceFactory;
+        private readonly AIBrainsContext _brainsContext;
 
         public BrainsFactory(DIContainer container)
         {
             _container = container;
             _timerServiceFactory = _container.Resolve<TimerServiceFactory>();
+            _brainsContext = _container.Resolve<AIBrainsContext>();
         }
 
         public StateMachineBrain CreateGhostBrain(Entity entity)
@@ -24,9 +26,13 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
             AIStateMachine stateMachine = CreateRandomMovementStateMachine(entity);
             StateMachineBrain brain = new StateMachineBrain(stateMachine);
 
+            _brainsContext.SetFor(entity, brain);
+
+
             return brain;
 
         }
+
 
 
         private AIStateMachine CreateRandomMovementStateMachine(Entity entity)

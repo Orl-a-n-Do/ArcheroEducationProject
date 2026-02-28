@@ -3,6 +3,7 @@ using System.Collections;
 using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Configs.GamePlay;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
@@ -23,6 +24,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
         [SerializeField] private TestGamePlay _testGamePlay;
 
         private EntitiesLifeContext _entitiesLifeContext;
+        private AIBrainsContext _brainsContext;
+
 
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
@@ -49,6 +52,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             _walletService = _container.Resolve<WalletService>();
 
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+            _brainsContext = _container.Resolve<AIBrainsContext>();
 
 
             _testGamePlay.Initialize(_container);
@@ -68,6 +72,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         private void Update()
         {
+
+            _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
 
 
