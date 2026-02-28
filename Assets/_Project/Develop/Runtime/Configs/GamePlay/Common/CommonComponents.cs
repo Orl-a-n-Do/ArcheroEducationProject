@@ -7,5 +7,9 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Common
     {
         public Rigidbody Value;
     }
-
+    public class TransformComponent: IEntityComponent 
+    { 
+        public Transform Value;
+ 
+    }
 }
