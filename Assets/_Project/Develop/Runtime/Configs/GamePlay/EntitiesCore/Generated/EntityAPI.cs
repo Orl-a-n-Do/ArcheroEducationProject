@@ -525,6 +525,20 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage.CanApplyDamage() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.CurrentTarget CurrentTargetC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.CurrentTarget>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity> CurrentTarget => CurrentTargetC.Value;
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddCurrentTarget()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.CurrentTarget() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddCurrentTarget(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.CurrentTarget() {Value = value}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Common.RigidbodyComponent RigidbodyC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Common.RigidbodyComponent>();
 
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;
