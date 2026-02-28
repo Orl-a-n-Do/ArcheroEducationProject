@@ -9,7 +9,30 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
 {
     public  class AIBrainsContext
     {
-        private readonly List<EntityToBrain> entityToBrains = new();
+        private readonly List<EntityToBrain> _entityToBrains = new();
+
+        public void SetFor(Entity entity, IBrain brain)
+        {
+
+            foreach(EntityToBrain item in _entityToBrains)
+            {
+                if(item.Entity == entity)
+                {
+                    item.Brain.Disable();
+                    item.Brain.Dispose();
+                    item.Brain = brain;
+                    item.Brain.Enable();
+                    return;
+                }
+
+            }
+
+
+            _entityToBrains.Add(new EntityToBrain(entity, brain));
+            brain.Enable();
+
+
+        }
         private class EntityToBrain
         {
             public Entity Entity;
