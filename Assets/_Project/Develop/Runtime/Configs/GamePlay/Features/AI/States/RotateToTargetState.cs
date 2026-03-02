@@ -15,13 +15,15 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States
         {
             _rotationDirection = entity.RotationDirection;
             _currentTarget = entity.CurrentTarget;
+            _transform = entity.Transform;
             
 
         }
 
         public void Update(float deltaTime)
         {
-            
+            if (_currentTarget.Value != null)
+                _rotationDirection.Value = (_currentTarget.Value.Transform.position - _transform.position).normalized;
         }
     }
 }
