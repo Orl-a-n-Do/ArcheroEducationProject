@@ -20,7 +20,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States
         {
             _inputService = inputService;
             _movementDirection = entity.MoveDirection;
-            _movementDirection = entity.RotationDirection;
+            _rotationDirection = entity.RotationDirection;
 
         }
 
