@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
@@ -15,6 +16,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
         private readonly DIContainer _container;
         private readonly TimerServiceFactory _timerServiceFactory;
         private readonly AIBrainsContext _brainsContext;
+        private readonly IInputService _inputService;
 
         public object ICondition { get; private set; }
 
@@ -23,7 +25,42 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
             _container = container;
             _timerServiceFactory = _container.Resolve<TimerServiceFactory>();
             _brainsContext = _container.Resolve<AIBrainsContext>();
+            _inputService = _container.Resolve<IInputService>();
         }
+
+        public StateMachineBrain CreateMainHeroBrain(Entity entity)
+        {
+            AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
+
+            PlayerInputMovementState movementState = new PlayerInputMovementState(entity, _inputService);
+
+            ReactiveVariable<Entity> currentTarget = entity.CurrentTarget;
+
+            ICompositeCondition fromMovementToCombatStateCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => currentTarget.Value != null))
+                .Add(new FuncCondition(() => _inputService.Direction == Vector3.zero));
+
+            ICompositeCondition fromCombatToMovementStateCondition = new CompositeCondition(LogicOperations.Or)
+                .Add(new FuncCondition(() => currentTarget.Value == null))
+                .Add(new FuncCondition(() => _inputService.Direction != Vector3.zero));
+
+            AIStateMachine behaviour = new AIStateMachine();
+
+            behaviour.AddState(movementState);
+            behaviour.AddState(combatState);
+
+            behaviour.AddTransition(movementState, combatState, fromMovementToCombatStateCondition);
+            behaviour.AddTransition(combatState, movementState, fromCombatToMovementStateCondition);
+            
+
+            StateMachineBrain brain = new StateMachineBrain(behaviour);
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
+
+
+        }
+
 
         public StateMachineBrain CreateGhostBrain(Entity entity)
         {
