@@ -130,7 +130,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
                 {
                     Entity target = currentTarget.Value;
 
-                    if (target != null)
+                    if (target == null)
                         return false;
 
                     float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Transform.position - transform.position));
@@ -146,7 +146,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
             stateMachine.AddState(attackTriggerState);
 
             stateMachine.AddTransition(rotateToTargetState, attackTriggerState, fromRotateToAttackCondition);
-            stateMachine.AddTransition(attackTriggerState, rotateToTargetState, fromRotateToAttackCondition);
+            stateMachine.AddTransition(attackTriggerState, rotateToTargetState, fromAttackToRotateStateCondition);
 
             return stateMachine;
 
