@@ -58,7 +58,7 @@ namespace Assets._Project.Develop.Editor
                     sb.AppendLine($"\t\tpublic {GetValidTypeName(field.FieldType)} {componentName} => {modifiedComponentName}.{field.Name};");
                     sb.AppendLine();
 
-                    //мметод Try Get
+                    //метод Try Get
                     sb.AppendLine($"\t\tpublic bool TryGet{componentName}(out {GetValidTypeName(field.FieldType)} {GetVariableNameFrom(field.Name)})");
                     sb.AppendLine("\t\t{");
                     sb.AppendLine($"\t\t\tbool result = TryGetComponent(out {fullTypeName} component);");

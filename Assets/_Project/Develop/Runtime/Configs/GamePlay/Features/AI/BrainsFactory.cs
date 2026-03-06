@@ -54,13 +54,13 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
             behaviour.AddTransition(movementState, combatState, fromMovementToCombatStateCondition);
             behaviour.AddTransition(combatState, movementState, fromCombatToMovementStateCondition);
 
-            FindTargetState findTargetState = new FindTargetState(targetSelector, _entitiesLifeContext,entity);
+            FindTargetState findTargetState = new FindTargetState(targetSelector, _entitiesLifeContext, entity);
             AIParallelState parallelState = new AIParallelState(findTargetState,behaviour);
 
             AIStateMachine rootStateMachine = new AIStateMachine();
             rootStateMachine.AddState(parallelState);
 
-            StateMachineBrain brain = new StateMachineBrain(behaviour);
+            StateMachineBrain brain = new StateMachineBrain(rootStateMachine);
             _brainsContext.SetFor(entity, brain);
 
             return brain;
