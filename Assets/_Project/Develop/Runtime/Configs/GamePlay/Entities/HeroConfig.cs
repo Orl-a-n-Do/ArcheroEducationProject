@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Entities
 {
+
+    [CreateAssetMenu(menuName = "Configs/Gameplay/Entities/NewHeroConfig", fileName = "HeroConfig")]
     public class HeroConfig: EntityConfig
     {
 
