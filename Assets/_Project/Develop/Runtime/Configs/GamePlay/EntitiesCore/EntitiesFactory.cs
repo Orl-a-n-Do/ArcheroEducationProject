@@ -163,7 +163,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
                  .AddDeathProcessCurrentTime()
                  .AddTakeDamageRequest()
                  .AddTakeDamageEvent()
-                 .AddContactDetectingMask(1 << LayerMask.NameToLayer("Characters"))
+                 .AddContactDetectingMask(Layers.CharactersMask)
                  .AddContactCollidersBuffer(new Buffer<Collider>(64))
                  .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                  .AddBodyContactDamage(new ReactiveVariable<float>(config.BodyContactDamage));
@@ -235,11 +235,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
                  .AddRotationDirection(new ReactiveVariable<Vector3>(direction))
                  .AddRotationSpeed(new ReactiveVariable<float>(9999))
                  .AddIsDead()
-                 .AddContactDetectingMask(1 << LayerMask.NameToLayer("Characters"))
+                 .AddContactDetectingMask(Layers.CharactersMask)
                  .AddContactCollidersBuffer(new Buffer<Collider>(64))
                  .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                  .AddBodyContactDamage(new ReactiveVariable<float>(damage))
-                 .AddDeathMask(1 << LayerMask.NameToLayer("Characters"))
+                 .AddDeathMask(Layers.CharactersMask)
                  .AddIsTouchDeathMask();
 
 
