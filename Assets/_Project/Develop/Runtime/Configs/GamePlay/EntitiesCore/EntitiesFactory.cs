@@ -12,6 +12,7 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.Shoot;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Entities;
 
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
@@ -32,7 +33,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
         }
 
 
-        public Entity CreateHero(Vector3 position) //Создание и кофигурирование сущностей
+        public Entity CreateHero(Vector3 position, HeroConfig config) //Создание и кофигурирование сущностей
         {
             Entity entity = CreateEmpty();
 
@@ -41,29 +42,29 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
             entity
                  .AddMoveDirection()
-                 .AddMoveSpeed(new ReactiveVariable<float>(10))
+                 .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed))
                  .AddIsMoving()
                  .AddRotationDirection()
-                 .AddRotationSpeed(new ReactiveVariable<float>(900))
-                 .AddMaxHealth(new ReactiveVariable<float>(100))
-                 .AddCurrentHealth(new ReactiveVariable<float>(100))
+                 .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
+                 .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                 .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
                  .AddIsDead()
                  .AddInDeathProcess()
-                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
                  .AddDeathProcessCurrentTime()
                  .AddTakeDamageRequest()
                  .AddTakeDamageEvent()
-                 .AddAttackProcessInitialTime(new ReactiveVariable<float>(3))
+                 .AddAttackProcessInitialTime(new ReactiveVariable<float>(config.AttackProcessTime))
                  .AddAttackProcessCurrentTime()
                  .AddInAttackProcess()
                  .AddStartAttackRequest()
                  .AddStartAttackEvent()
                  .AddEndAttackEvent()
-                 .AddAttackDelayTime(new ReactiveVariable<float>(1))
+                 .AddAttackDelayTime(new ReactiveVariable<float>(config.AttackDelayTime))
                  .AddAttackDelayTimeEndEvent()
-                 .AddInstantAttackDamage(new ReactiveVariable<float>(50))
+                 .AddInstantAttackDamage(new ReactiveVariable<float>(config.InstantAttackDamage))
                  .AddAttackCanceledEvent()
-                 .AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
+                 .AddAttackCooldownInitialTime(new ReactiveVariable<float>(config.AttackCooldown))
                  .AddAttackCooldownCurrentTime()
                  .AddInAttackCooldown();
                  
@@ -141,7 +142,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
 
 
-        public Entity CreateGhost(Vector3 position) //Создание и кофигурирование сущностей
+        public Entity CreateGhost(Vector3 position, GhostConfig config) //Создание и кофигурирование сущностей
         {
            Entity entity = CreateEmpty();
 
@@ -150,22 +151,22 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
             entity
                  .AddMoveDirection()
-                 .AddMoveSpeed(new ReactiveVariable<float>(10))
+                 .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed))
                  .AddIsMoving()
                  .AddRotationDirection()
-                 .AddRotationSpeed(new ReactiveVariable<float>(900))
-                 .AddMaxHealth(new ReactiveVariable<float>(100))
-                 .AddCurrentHealth(new ReactiveVariable<float>(100))
+                 .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
+                 .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                 .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
                  .AddIsDead()
                  .AddInDeathProcess()
-                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
                  .AddDeathProcessCurrentTime()
                  .AddTakeDamageRequest()
                  .AddTakeDamageEvent()
                  .AddContactDetectingMask(1 << LayerMask.NameToLayer("Characters"))
                  .AddContactCollidersBuffer(new Buffer<Collider>(64))
                  .AddContactEntitiesBuffer(new Buffer<Entity>(64))
-                 .AddBodyContactDamage(new ReactiveVariable<float>(50));
+                 .AddBodyContactDamage(new ReactiveVariable<float>(config.BodyContactDamage));
 
             ICompositeCondition canMove = new CompositeCondition()
                    .Add(new FuncCondition(() => entity.IsDead.Value == false));
