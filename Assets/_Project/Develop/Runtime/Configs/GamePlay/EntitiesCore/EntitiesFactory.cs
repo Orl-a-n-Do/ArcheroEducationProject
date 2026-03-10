@@ -130,7 +130,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
 
 
-            _entitiesLifeContext.Add(entity);
+           
 
 
             return entity;

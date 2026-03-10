@@ -134,7 +134,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI
                         return false;
 
                     float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Transform.position - transform.position));
-                    return angleToTarget < 1f;
+                    return angleToTarget < 3f;
                 }));
 
             ReactiveVariable<bool> inAttackProcess = entity.InAttackProcess;
