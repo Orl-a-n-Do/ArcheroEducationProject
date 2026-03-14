@@ -279,6 +279,13 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.CanRotate() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero.IsMainHero IsMainHeroC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero.IsMainHero>();
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddIsMainHero()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero.IsMainHero() ); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.CurrentHealth CurrentHealthC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.LifeCircle.CurrentHealth>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<float> CurrentHealth => CurrentHealthC.Value;

@@ -32,6 +32,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero
 
             Entity entity = _entitiesFactory.CreateHero(position, config);
 
+            entity.AddIsMainHero();
+
             entity.AddCurrentTarget();
             _brainsFactory.CreateMainHeroBrain(entity, new NearestDamageableTargetSelector(entity));
 
