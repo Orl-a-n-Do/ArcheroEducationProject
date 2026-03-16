@@ -37,7 +37,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeD
 
                    _processedEntities.Add(contactEntity);
 
-                    TryDamageFrom(_entity, contactEntity, _damage.Value);
+                    EntitiesHelper.TryTakeDamageFrom(_entity, contactEntity, _damage.Value);
 
                 }
             }
@@ -47,25 +47,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ContactTakeD
                     _processedEntities.RemoveAt(i);
         }
 
-        public bool TryDamageFrom(Entity source, Entity damageable, float damage)
-        {
-            if(damageable.TryGetTakeDamageRequest(out ReactiveEvent<float> takeDamageRequest) == false)
-                return false;
-
-            if(source.TryGetTeam(out ReactiveVariable<Teams> sourceTeam)
-                && damageable.TryGetTeam(out ReactiveVariable<Teams> damageableTeam))
-            {
-                if(sourceTeam.Value == damageableTeam.Value)
-                    return false;
-            }
-
-            takeDamageRequest.Invoke(damage);
-            return true;
-
-        }
-
-
-
+      
 
         public bool ContainInContacts(Entity entity)
         {
