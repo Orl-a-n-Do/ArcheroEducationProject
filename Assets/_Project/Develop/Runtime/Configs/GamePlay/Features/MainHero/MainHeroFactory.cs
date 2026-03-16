@@ -5,6 +5,8 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.TeamsFeature;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero
 {
@@ -32,7 +34,9 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero
 
             Entity entity = _entitiesFactory.CreateHero(position, config);
 
-            entity.AddIsMainHero();
+            entity
+                .AddIsMainHero()
+                .AddTeam(new ReactiveVariable<Teams>(Teams.MainHero));
 
             entity.AddCurrentTarget();
             _brainsFactory.CreateMainHeroBrain(entity, new NearestDamageableTargetSelector(entity));

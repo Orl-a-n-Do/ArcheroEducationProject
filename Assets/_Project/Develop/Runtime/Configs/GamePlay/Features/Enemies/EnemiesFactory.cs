@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Entities;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Enemies
@@ -46,7 +44,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Enemies
 
 
             }
-            
+
+            entity.AddTeam(new ReactiveVariable<Teams>(Teams.Enemies));
 
             _entitiesLifeContext.Add(entity);
 
