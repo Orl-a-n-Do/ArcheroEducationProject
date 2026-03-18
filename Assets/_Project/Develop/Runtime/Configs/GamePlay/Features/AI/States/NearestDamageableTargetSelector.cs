@@ -2,7 +2,9 @@
 using System.Linq;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.ApplyDamage;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States
@@ -27,6 +29,14 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States
                 if(target.TryGetCanApplyDamage(out ICompositeCondition canApplyDamage))
                 {
                     result = result && canApplyDamage.Evaluate();
+                }
+
+                if(_source.TryGetTeam(out ReactiveVariable<Teams> sourceTeam)
+                && target.TryGetTeam(out ReactiveVariable<Teams> targetTeam))
+                {
+
+                    result = result && (sourceTeam.Value != targetTeam.Value);
+
                 }
 
                 result = result && (target != _source);
