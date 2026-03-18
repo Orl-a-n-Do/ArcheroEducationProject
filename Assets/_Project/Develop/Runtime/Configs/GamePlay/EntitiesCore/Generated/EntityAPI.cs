@@ -145,6 +145,30 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchDeathMask() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchAnotherTeam IsTouchAnotherTeamC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchAnotherTeam>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> IsTouchAnotherTeam => IsTouchAnotherTeamC.Value;
+
+		public bool TryGetIsTouchAnotherTeam(out Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> value)
+		{
+			bool result = TryGetComponent(out Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchAnotherTeam component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool>);
+			return result;
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddIsTouchAnotherTeam()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchAnotherTeam() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore.Entity AddIsTouchAnotherTeam(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<bool> value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Sensors.IsTouchAnotherTeam() {Value = value}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MovementFeature.MoveDirection>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
