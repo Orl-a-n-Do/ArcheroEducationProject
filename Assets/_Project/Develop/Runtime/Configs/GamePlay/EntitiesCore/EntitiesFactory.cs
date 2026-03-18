@@ -235,11 +235,11 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
                  .AddRotationDirection(new ReactiveVariable<Vector3>(direction))
                  .AddRotationSpeed(new ReactiveVariable<float>(9999))
                  .AddIsDead()
-                 .AddContactDetectingMask(Layers.CharactersMask)
+                 .AddContactDetectingMask(Layers.CharactersMask | Layers.EnviromentMask)
                  .AddContactCollidersBuffer(new Buffer<Collider>(64))
                  .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                  .AddBodyContactDamage(new ReactiveVariable<float>(damage))
-                 .AddDeathMask(Layers.CharactersMask)
+                 .AddDeathMask(Layers.EnviromentMask)
                  .AddIsTouchDeathMask();
 
 
