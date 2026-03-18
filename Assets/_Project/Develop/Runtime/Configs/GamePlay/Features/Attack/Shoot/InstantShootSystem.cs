@@ -12,6 +12,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.Shoot
 
         private ReactiveEvent _attackDelayEndEvent;
 
+        private Entity _entity;
+
         private ReactiveVariable<float> _damage;
         private Transform _shootPoint;
 
@@ -24,6 +26,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.Shoot
 
         public void OnInit(Entity entity)
         {
+            _entity = entity;
+
             _attackDelayEndEvent = entity.AttackDelayTimeEndEvent;
 
 
@@ -36,7 +40,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack.Shoot
 
         private void OnAttackDelayEnd()
         {
-            _entitiesFactory.CreateProjectile(_shootPoint.position, _shootPoint.forward, _damage.Value);
+            _entitiesFactory.CreateProjectile(_shootPoint.position, _shootPoint.forward, _damage.Value, _entity);
             
             Debug.Log($"Выстрел, урон:{_damage.Value}, точка выстрела : {_shootPoint.position}");
 
