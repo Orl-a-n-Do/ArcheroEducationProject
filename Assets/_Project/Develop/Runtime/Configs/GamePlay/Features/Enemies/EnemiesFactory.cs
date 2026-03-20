@@ -45,7 +45,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Enemies
 
             }
 
-            entity.AddTeam(new ReactiveVariable<Teams>(Teams.MainHero));
+            entity.AddTeam(new ReactiveVariable<Teams>(Teams.Enemies));
 
             _entitiesLifeContext.Add(entity);
 
