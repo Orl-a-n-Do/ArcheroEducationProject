@@ -5,6 +5,7 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatures;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
@@ -32,6 +33,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle(CreateMainHeroFactory);
             container.RegisterAsSingle(CreateEnemiesFactory);
 
+            container.RegisterAsSingle(CreateStagesFactory);
+
 
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
@@ -39,6 +42,11 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             
 
+        }
+
+        private static StagesFactory CreateStagesFactory(DIContainer c)
+        {
+            return new StagesFactory(c);
         }
 
         private static EnemiesFactory CreateEnemiesFactory(DIContainer c)
