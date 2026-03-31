@@ -6,8 +6,10 @@ using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatures;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Levels;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
+using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
 
@@ -15,8 +17,14 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 {
     public class GamePlayContextRegistration
     {
+
+        private static GameplayInputArgs _inputArgs;
+
+
         public static void Process(DIContainer container, GameplayInputArgs args)
         {
+
+            _inputArgs  = args;
 
             container.RegisterAsSingle(CreateEntitiesFactory);
 
@@ -34,6 +42,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle(CreateEnemiesFactory);
 
             container.RegisterAsSingle(CreateStagesFactory);
+            container.RegisterAsSingle(CreateStageProviderService);
 
 
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
@@ -41,6 +50,14 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle(CreatemonoEntitiesFactory).NonLazy();
 
             
+
+        }
+
+        private static StageProviderService CreateStageProviderService(DIContainer c)
+        {
+            return new StageProviderService(
+                c.Resolve<ConfigsProviderService>().GetConfig<LevelsListConfig>().GetBy(_inputArgs.LevelNumber),
+                c.Resolve<StagesFactory>());
 
         }
 
