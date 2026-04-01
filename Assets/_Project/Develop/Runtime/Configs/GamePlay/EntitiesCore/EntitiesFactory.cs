@@ -311,9 +311,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
           
                 .AddSystem(new BodyContactsDetectingSystem())
                 .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
-            
-
-
+   
 
             _entitiesLifeContext.Add(entity);
 
