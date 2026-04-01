@@ -2,7 +2,7 @@
 - Project name: ArcheroEducationProject
 - Unity version: Unity 2022.3.20f1
 - Active game object:
-  - Name: ContactTrigger
+  - Name: Projectile
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Projectiles
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

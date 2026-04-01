@@ -292,6 +292,38 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore
 
         }
 
+        public Entity CreateContactTrigger(Vector3 position) //Создание и кофигурирование сущностей
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, position, "Entities/ContactTrigger");
+
+
+            entity
+
+                 .AddContactDetectingMask(Layers.CharactersMask)
+                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                 .AddContactEntitiesBuffer(new Buffer<Entity>(64));
+
+
+
+            entity
+          
+                .AddSystem(new BodyContactsDetectingSystem())
+                .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
+            
+
+
+
+            _entitiesLifeContext.Add(entity);
+
+
+            return entity;
+
+        }
+
+
+
         private Entity CreateEmpty() => new Entity();
 
     }
