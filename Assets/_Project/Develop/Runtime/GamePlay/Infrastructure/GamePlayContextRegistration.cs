@@ -44,6 +44,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle(CreateStagesFactory);
             container.RegisterAsSingle(CreateStageProviderService);
 
+            container.RegisterAsSingle(CreateProperationTriggerService);
+
 
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
@@ -52,6 +54,18 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             
 
         }
+
+        private static ProperationTriggerService CreateProperationTriggerService(DIContainer c)
+        {
+            return new ProperationTriggerService(
+                c.Resolve<EntitiesFactory>(),
+                c.Resolve<EntitiesLifeContext>());
+
+
+        }
+
+
+
 
         private static StageProviderService CreateStageProviderService(DIContainer c)
         {
