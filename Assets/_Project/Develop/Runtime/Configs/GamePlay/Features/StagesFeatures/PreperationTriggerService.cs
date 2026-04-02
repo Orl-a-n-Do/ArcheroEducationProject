@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatures
 {
-    public class ProperationTriggerService
+    public class PreperationTriggerService
     {
         private ReactiveVariable<bool> _hasMainHeroContact = new();
 
@@ -18,7 +18,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatur
         private Entity _nextStageTrigger;
         private Buffer<Entity> _nextStageTriggerContacts;
 
-        public ProperationTriggerService(
+        public PreperationTriggerService(
             EntitiesFactory entitiesFactory, 
             EntitiesLifeContext entitiesLifeContext)
         {

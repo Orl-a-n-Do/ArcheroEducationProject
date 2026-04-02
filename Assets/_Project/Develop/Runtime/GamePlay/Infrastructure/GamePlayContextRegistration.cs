@@ -55,9 +55,9 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         }
 
-        private static ProperationTriggerService CreateProperationTriggerService(DIContainer c)
+        private static PreperationTriggerService CreateProperationTriggerService(DIContainer c)
         {
-            return new ProperationTriggerService(
+            return new PreperationTriggerService(
                 c.Resolve<EntitiesFactory>(),
                 c.Resolve<EntitiesLifeContext>());
 
