@@ -2,6 +2,7 @@
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatures;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
@@ -48,6 +49,23 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
                 _container.Resolve<ICoroutinesPerformer>());
 
         }
+
+        public GamePlayStateMachine CreateCoreLoopState()
+        {
+            PreperationTriggerService preperationTriggerService = _container.Resolve<PreperationTriggerService>();
+            StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
+
+            PreperationState preperationState = CreatePreperationState(); 
+            StageProcessState stageProcessState = CreateStageProcessState();
+
+            ICompositeCondition preperationToStageProcessCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => preperationTriggerService.HasMainHeroContact.Value))
+                .Add(new FuncCondition(() => stageProviderService.HasNextStage()));
+
+            return null;
+
+        }
+
 
     }
 }
