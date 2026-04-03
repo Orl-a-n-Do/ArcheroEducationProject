@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.InputFeature;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatures;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
@@ -6,12 +7,15 @@ using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+using Unity.VisualScripting;
 
 namespace Assets._Project.Develop.Runtime.GamePlay.States
 {
     public class GamePlayStatesFactory
     {
         private readonly DIContainer _container;
+
+        public object GamePlayStateMachine { get; private set; }
 
         public GamePlayStatesFactory(DIContainer container)
         {
@@ -56,6 +60,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
 
             PreperationTriggerService preperationTriggerService = _container.Resolve<PreperationTriggerService>();
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
+            MainHeroHolderService mainHeroHolderService = _container.Resolve<MainHeroHolderService>();
 
 
             GameplayStateMachine coreLoopState = CreateCoreLoopState();
@@ -67,6 +72,26 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
                 .Add(new FuncCondition(() => preperationTriggerService.HasMainHeroContact.Value))
                 .Add(new FuncCondition(() => stageProviderService.CurrentStageResult.Value == StageResults.Completed))
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage() == false));
+
+            ICompositeCondition coreLoopToDefeatStateCondition = new CompositeCondition()
+                .Add(new FuncCondition(() =>
+                {
+                    if (mainHeroHolderService.MainHero != null)
+                        return mainHeroHolderService.MainHero.IsDead.Value;
+
+                    return false;
+
+                }));
+           
+            GameplayStateMachine gameplayCycle = new GameplayStateMachine();
+
+            gameplayCycle.AddState(coreLoopState);
+            gameplayCycle.AddState(winState);
+            gameplayCycle.AddState(defeatState);
+
+            gameplayCycle.AddTransition(coreLoopState, winState, coreLoopToWinStateCondition);
+            gameplayCycle.AddTransition(coreLoopState, defeatState, coreLoopToDefeatStateCondition);
+                
 
             return null;
 
