@@ -50,7 +50,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
 
         }
 
-        public GamePlayStateMachine CreateCoreLoopState()
+        public GameplayStateMachine CreateCoreLoopState()
         {
             PreperationTriggerService preperationTriggerService = _container.Resolve<PreperationTriggerService>();
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
@@ -62,7 +62,19 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
                 .Add(new FuncCondition(() => preperationTriggerService.HasMainHeroContact.Value))
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage()));
 
-            return null;
+
+            FuncCondition stageProcessToPreperationCondition =
+                new FuncCondition(() => stageProviderService.CurrentStageResult.Value == StageResults.Completed);
+
+            GameplayStateMachine coreLoopState = new GameplayStateMachine();
+
+            coreLoopState.AddState(preperationState);
+            coreLoopState.AddState(stageProcessState);
+            
+            coreLoopState.AddTransition(preperationState, stageProcessState, preperationToStageProcessCondition );
+            coreLoopState.AddTransition(stageProcessState, preperationState, stageProcessToPreperationCondition);
+
+            return coreLoopState;
 
         }
 

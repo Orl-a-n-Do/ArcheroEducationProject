@@ -4,14 +4,14 @@ using Assets._Project.Develop.Runtime.Utilities.StateMachineCore;
 
 namespace Assets._Project.Develop.Runtime.GamePlay.States
 {
-    public class GamePlayStateMachine : StateMachine<IUpdatableState>
+    public class GameplayStateMachine : StateMachine<IUpdatableState>
     {
-        public GamePlayStateMachine(List<IDisposable> disposables) : base(disposables)
+        public GameplayStateMachine(List<IDisposable> disposables) : base(disposables)
         {
 
         }
 
-        public GamePlayStateMachine() : base(new List<IDisposable>())
+        public GameplayStateMachine() : base(new List<IDisposable>())
         {
 
 
