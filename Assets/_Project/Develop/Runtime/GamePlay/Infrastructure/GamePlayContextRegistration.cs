@@ -44,8 +44,10 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle(CreateStagesFactory);
             container.RegisterAsSingle(CreateStageProviderService);
 
-            container.RegisterAsSingle(CreateProperationTriggerService);
+            container.RegisterAsSingle(CreatePreperationTriggerService);
 
+
+            container.RegisterAsSingle(CreateMainHeroHolderService).NonLazy();
 
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
@@ -55,12 +57,24 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         }
 
-        private static PreperationTriggerService CreateProperationTriggerService(DIContainer c)
+        private static MainHeroHolderService CreateMainHeroHolderService(DIContainer c)
+        {
+            return new MainHeroHolderService(c.Resolve<EntitiesLifeContext>());
+
+        }
+
+
+
+
+
+
+
+
+        private static PreperationTriggerService CreatePreperationTriggerService(DIContainer c)
         {
             return new PreperationTriggerService(
                 c.Resolve<EntitiesFactory>(),
                 c.Resolve<EntitiesLifeContext>());
-
 
         }
 
