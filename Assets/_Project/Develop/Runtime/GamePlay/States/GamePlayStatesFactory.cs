@@ -11,13 +11,13 @@ using Unity.VisualScripting;
 
 namespace Assets._Project.Develop.Runtime.GamePlay.States
 {
-    public class GamePlayStatesFactory
+    public class GameplayStatesFactory
     {
         private readonly DIContainer _container;
 
         public object GamePlayStateMachine { get; private set; }
 
-        public GamePlayStatesFactory(DIContainer container)
+        public GameplayStatesFactory(DIContainer container)
         {
             _container = container;
         }
@@ -55,7 +55,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
         }
 
 
-        public GameplayStateMachine CreateGamePlayStateMachine(GameplayInputArgs gameplayInputArgs)
+        public GameplayStateMachine CreateGameplayStateMachine(GameplayInputArgs gameplayInputArgs)
         {
 
             PreperationTriggerService preperationTriggerService = _container.Resolve<PreperationTriggerService>();
