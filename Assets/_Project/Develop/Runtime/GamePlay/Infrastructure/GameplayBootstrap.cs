@@ -4,8 +4,6 @@ using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneMan
 using Assets._Project.Develop.Runtime.Configs.GamePlay;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
-using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero;
-using Assets._Project.Develop.Runtime.GamePlay.States;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
@@ -23,8 +21,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         private WalletService _walletService;
 
+        [SerializeField] private TestGamePlay _testGamePlay;
 
-        private GameplayStatesContext _gameplayStatesContext;
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainsContext _brainsContext;
 
@@ -56,9 +54,8 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _brainsContext = _container.Resolve<AIBrainsContext>();
 
-            _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
 
-            _container.Resolve<MainHeroFactory>().Create(Vector3.zero);
+            _testGamePlay.Initialize(_container);
 
             yield break;
         }
@@ -69,7 +66,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
-           _gameplayStatesContext.Run();
+            _testGamePlay.Run();
         }
 
 
@@ -78,7 +75,6 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
-            _gameplayStatesContext?.Update(Time.deltaTime);
 
 
 
@@ -90,7 +86,6 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
             }
-
 
         }
     }
