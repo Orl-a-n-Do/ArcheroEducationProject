@@ -45,7 +45,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.StagesFeatur
 
         public void Update(float deltaTime)
         {
-            if ( _nextStageTrigger != null)
+            if ( _nextStageTrigger == null)
                 return;
 
 

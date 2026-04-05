@@ -12,11 +12,10 @@ using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagement;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
-using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 {
-    public class GamePlayContextRegistration
+    public class GameplayContextRegistration
     {
 
         private static GameplayInputArgs _inputArgs;
@@ -57,10 +56,13 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
             container.RegisterAsSingle(CreatemonoEntitiesFactory).NonLazy();
-
-            
-
+ 
         }
+
+     
+
+
+
 
         private static GameplayStatesContext CreateGameplayStatesContext(DIContainer c)
         {

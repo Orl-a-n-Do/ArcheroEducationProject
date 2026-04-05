@@ -7,7 +7,6 @@ using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
 using Assets._Project.Develop.Runtime.Utilities.DataManagement.DatapProvider;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagement;
-using Unity.VisualScripting;
 
 namespace Assets._Project.Develop.Runtime.GamePlay.States
 {
@@ -91,9 +90,9 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
 
             gameplayCycle.AddTransition(coreLoopState, winState, coreLoopToWinStateCondition);
             gameplayCycle.AddTransition(coreLoopState, defeatState, coreLoopToDefeatStateCondition);
-                
 
-            return null;
+
+            return gameplayCycle;
 
         }
 

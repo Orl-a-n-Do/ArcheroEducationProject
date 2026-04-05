@@ -4,6 +4,8 @@ using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneMan
 using Assets._Project.Develop.Runtime.Configs.GamePlay;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI;
+using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.MainHero;
+using Assets._Project.Develop.Runtime.GamePlay.States;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
@@ -21,7 +23,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
         private WalletService _walletService;
 
-        [SerializeField] private TestGamePlay _testGamePlay;
+        private GameplayStatesContext _gameplayStatesContext;
 
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainsContext _brainsContext;
@@ -37,7 +39,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             _inputArgs = gameplayInputArgs;
 
-            GamePlayContextRegistration.Process(_container, _inputArgs);
+            GameplayContextRegistration.Process(_container, _inputArgs);
 
         }
 
@@ -54,8 +56,9 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _brainsContext = _container.Resolve<AIBrainsContext>();
 
+            _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
 
-            _testGamePlay.Initialize(_container);
+            _container.Resolve<MainHeroFactory>().Create(Vector3.zero);
 
             yield break;
         }
@@ -66,7 +69,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
-            _testGamePlay.Run();
+            _gameplayStatesContext.Run();
         }
 
 
@@ -75,8 +78,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
 
             _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
-
-
+            _gameplayStatesContext?.Update(Time.deltaTime);
 
 
             if (Input.GetKeyDown(KeyCode.F))
@@ -86,6 +88,9 @@ namespace Assets._Project.Develop.Runtime.GamePlay.Infrastructure
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
             }
+
+
+
 
         }
     }
