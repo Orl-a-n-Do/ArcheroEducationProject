@@ -39,7 +39,8 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.AI.States
         {
             base.Exit();
 
-            _movementDirection.Value -= Vector3.zero;
+            _movementDirection.Value = Vector3.zero;
+            _rotationDirection.Value = Vector3.zero;
         }
 
         public void Update(float deltaTime)

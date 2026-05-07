@@ -35,7 +35,7 @@ namespace Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression
 
         }
 
-        private bool PreviousLevelCompleted(int levelNumber) => IsLevelCompleted(levelNumber);
+        private bool PreviousLevelCompleted(int levelNumber) => IsLevelCompleted(levelNumber - 1);
 
         public void ReadFrom(PlayerData data)
         {

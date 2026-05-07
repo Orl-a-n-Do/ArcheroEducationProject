@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Character, Projectiles, Enviroment
 - Active game object:
-  - Name: Cube (3)
+  - Name: Ghost(Clone)
   - Tag: Untagged
-  - Layer: Enviroment
+  - Layer: Character
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
