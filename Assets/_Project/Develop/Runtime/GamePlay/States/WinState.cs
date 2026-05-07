@@ -1,5 +1,4 @@
-﻿using System;
-using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
+﻿using ArcheroEducationProject.Assets._Project.Develop.Runtime.Utilities.SceneManagement;
 using Assets._Project.Develop.Runtime.Configs.GamePlay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
 using Assets._Project.Develop.Runtime.Utilities.CourutinesManagement;
@@ -41,7 +40,7 @@ namespace Assets._Project.Develop.Runtime.GamePlay.States
 
             _levelsProgressionService.AddLevelToCompleted(_gamePlayInputArgs.LevelNumber);
 
-            _playerDataProvider.Save();
+            _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync());
 
         }
 
