@@ -1,8 +1,14 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
 - Project name: ArcheroEducationProject
 - Unity version: Unity 2022.3.20f1
+- Active scene:
+  - Name: Gameplay
+  - Tags:
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
+  - Layers:
+    - Default, TransparentFX, Ignore Raycast, Water, UI, Character, Projectiles, Enviroment
 - Active game object:
-  - Name: ContactTrigger
+  - Name: Cube (3)
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Enviroment
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

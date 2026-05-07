@@ -41,7 +41,7 @@ namespace Assets._Project.Develop.Runtime.Configs.GamePlay.Features.Attack
 
         public void OnDispose()
         {
-            throw new NotImplementedException();
+            _startAttackEventDisposable?.Dispose();
         }
 
     }
