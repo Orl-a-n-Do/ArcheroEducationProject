@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4333951785488508823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8936434373363429495}
+  m_Layer: 6
+  m_Name: DamageEffectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8936434373363429495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333951785488508823}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.848, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2834171182852490227}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6374004075447247993
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +230,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1491250466152915584}
+    - targetCorrespondingSourceObject: {fileID: 3618775917113046507, guid: f400d61af2e0bfe4ab6f2ab10f05de60,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8936434373363429495}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4421301909506499717, guid: f400d61af2e0bfe4ab6f2ab10f05de60,
         type: 3}
@@ -442,6 +477,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8912291979581522374}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 82a2914d8f86c62488456950c8330e38,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7936567456803667988}
   m_SourcePrefab: {fileID: 100100000, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
 --- !u!4 &1491250466152915584 stripped
 Transform:
@@ -509,6 +548,21 @@ MonoBehaviour:
   _animationClip: {fileID: -1500649498564232044, guid: ddaf42e3f94093e47aa6cd529ba439aa,
     type: 3}
   _animator: {fileID: 8807914577371762682}
+--- !u!114 &7936567456803667988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2516005573237461139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0df4b4971721e4c99417fb90cdc58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _applyDamageEffectPrefab: {fileID: 19873882, guid: ce90a5909cc1f7f49865904e3c751f81,
+    type: 3}
+  _effectSpawnPoint: {fileID: 8936434373363429495}
 --- !u!4 &7278674487785174584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5420008163957686366, guid: 82a2914d8f86c62488456950c8330e38,
